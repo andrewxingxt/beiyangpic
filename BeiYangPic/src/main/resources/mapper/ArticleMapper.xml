@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xt.andrewx.mapper.ArticleMapper">
+
+    <insert id="addNewPicArticle">
+        insert into article (id,user_id,title,release_date,content,pic_count,typeof)
+        values (#{id},#{user_id},#{title},#{release_date},#{content},#{pic_count},#{typeof});
+    </insert>
+    <insert id="addArticlePic">
+        insert into article_pic (article_id,pic_num,pic_addr)
+        values (#{article_id},#{pic_num},#{pic_addr});
+    </insert>
+</mapper>

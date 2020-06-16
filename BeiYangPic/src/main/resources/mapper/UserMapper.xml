@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xt.andrewx.mapper.UserMapper">
+    <insert id="InsertUser">
+        insert into tb_user (id,username,password,phone_number) values(#{Id},#{username},#{password},#{phone_num})
+    </insert>
+
+    <insert id="InsertUserinfo">
+        insert into user_info (user_id) values (#{user_id})
+    </insert>
+    <insert id="addFollow">
+        insert into follow_t (user_ed_id,user_id) values (#{user_ed_id},#{user_id})
+    </insert>
+
+    <update id="UpdateUsername">
+        update tb_user set username = #{username} where id = #{user_id}
+    </update>
+
+    <update id="Updatebirthday">
+        update user_info set birthday = #{birthday} where user_id = #{user_id}
+    </update>
+
+    <update id="UpdateHeadAvt">
+        update user_info set head_avt = #{HeadAvt} where user_id = #{user_id}
+    </update>
+
+    <update id="UpdateIntro">
+        update user_info set intro = #{intro} where user_id = #{user_id}
+    </update>
+
+    <select id="findAll" resultType="com.xt.andrewx.entity.User">
+        SELECT * FROM tb_user
+    </select>
+
+    <select id="findByPhoneNum" resultType="com.xt.andrewx.entity.User">
+        SELECT * from tb_user where phone_number = #{PhoneNum}
+    </select>
+
+    <select id="login" resultType="com.xt.andrewx.entity.UserInfo">
+        select u.id,username,phone_number,only_id,intro,birthday,head_avt,back_pic,count(ft.id),count(f.id)
+         from ((tb_user u left join user_info ui on u.id = ui.user_id) left join follow_t ft on u.id = ft.user_id) left join follow_t f on u.id = f.user_ed_id
+        where u.phone_number = #{PhoneNum}
+    </select>
+
+    <select id="findUserById" resultType="com.xt.andrewx.entity.UserInfo">
+        select u.id,username,phone_number,only_id,intro,birthday,head_avt,back_pic,count(ft.id),count(f.id)
+         from ((tb_user u left join user_info ui on u.id = ui.user_id) left join follow_t ft on u.id = ft.user_id) left join follow_t f on u.id = f.user_ed_id
+        where u.id = #{id}
+    </select>
+    <select id="loginInPassword" resultType="com.xt.andrewx.entity.UserInfo">
+        select u.id,username,phone_number,only_id,intro,birthday,head_avt,back_pic,count(ft.id),count(f.id)
+         from ((tb_user u left join user_info ui on u.id = ui.user_id) left join follow_t ft on u.id = ft.user_id) left join follow_t f on u.id = f.user_ed_id
+        where u.phone_number = #{phone_num} and u.password = #{password}
+    </select>
+
+</mapper>
